@@ -13,6 +13,7 @@ public class TatweerContext : DbContext
     }
 
     public DbSet<Product> Products { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

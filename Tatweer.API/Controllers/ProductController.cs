@@ -18,10 +18,10 @@ namespace Tatweer.API.Controllers
 
         private readonly IMediator _mediator;
         private readonly IProductQuery _productQuery;
-        public ProductController(IMediator mediator, IProductQuery employeeQuery) : base()
+        public ProductController(IMediator mediator, IProductQuery productQuery) : base()
         {
             _mediator = mediator;
-            _productQuery = employeeQuery;
+            _productQuery = productQuery;
         }
 
         /// <summary>
@@ -58,25 +58,28 @@ namespace Tatweer.API.Controllers
         }
 
         /// <summary>
-        /// Gets a list of products for the admin page.
-        /// </summary>
-        /// <returns>A list of products.</returns>
-        /// 
-        [HttpGet]
-        [Route("all")]
-        public async Task<ActionResult<List<ProductsDto>>> GetAll()
-        {
-            return Ok(await _productQuery.GetAllAsync());
-        }
-
-        /// <summary>
-        /// Gets a list of products to be displayed in shopping cart for the specified number of pages as sets in appsetting = 10 by default.
+        /// Gets a list of all products to be displayed in shopping cart for the specified number of pages as sets in appsetting = 10 by default.
         /// </summary>
         /// <param name="name">The name of product for filter.</param>
         /// <param name="page">The number of page should be displayed.</param>
         /// <param name="pageSize">The number of pageSize will be returns.</param>
         /// <returns>A list of products.</returns>
-        /// 
+        [HttpGet]
+        [Route("all")]
+        public IActionResult GetAll(int page, int pageSize, string? name = null)
+        {
+            int total = 0;
+            return Ok(_productQuery.GetAllWithPagerForAdmin(page, pageSize, out total, name));
+        }
+
+        /// <summary>
+        /// Gets a list of visible products to be displayed in shopping cart for the specified number of pages as sets in appsetting = 10 by default.
+        /// </summary>
+        /// <param name="name">The name of product for filter.</param>
+        /// <param name="page">The number of page should be displayed.</param>
+        /// <param name="pageSize">The number of pageSize will be returns.</param>
+        /// <returns>A list of products.</returns>
+
         [HttpGet]
         [Route("GetAllWithPager")]
         public IActionResult GetAllWithPager(int page, int pageSize, string? name = null)

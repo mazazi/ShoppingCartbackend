@@ -53,9 +53,14 @@ namespace Tatweer.Core.Entities
             this.IsVisible = false;
         }
 
+        public void UpdateStock(int quantity)
+        {
+            this.Qty -= quantity;
+        }
         private bool CheckProductVisibility()
         {
             return this.IsVisible;
         }
+
     }
 }

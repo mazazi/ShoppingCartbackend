@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tatweer.Insrastructure.Data;
 
@@ -11,9 +12,11 @@ using Tatweer.Insrastructure.Data;
 namespace Tatweer.Insrastructure.Migrations
 {
     [DbContext(typeof(TatweerContext))]
-    partial class TatweerContextModelSnapshot : ModelSnapshot
+    [Migration("20240609192517_ShoppingCartCreation")]
+    partial class ShoppingCartCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

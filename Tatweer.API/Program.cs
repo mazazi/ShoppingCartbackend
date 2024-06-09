@@ -17,7 +17,17 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 // Add services to the container.
 builder.Services.AddMediatR(typeof(Program)); // Register MediatR
-builder.Services.AddAutoMapper(typeof(Program)); 
+builder.Services.AddAutoMapper(typeof(Program));
+
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                    );
+});
 
 //Register MediatorR services 
 builder.Services.AddApplicationServices();
@@ -30,8 +40,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Cart API", Version = "v1" });
 });
-builder.Services.AddScoped<IProductQuery, ProductQuery>();
 
+// Configure scopped services
+builder.Services.AddScoped<IProductQuery, ProductQuery>();
+builder.Services.AddScoped<IShoppingCartQuery, ShoppingCartQuery>();
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
@@ -55,6 +67,12 @@ app.UseHttpsRedirection();
 
 
 app.UseRouting();
+app.UseCors(x => x
+                     .AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowAnyOrigin().WithExposedHeaders("content-disposition")
+            );
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
