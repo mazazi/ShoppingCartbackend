@@ -46,10 +46,10 @@ namespace Tatweer.Application.Handlers.Products
                         current.Update(request.Name, request.Qty, request.Price, request.IsVisible);
                         _context.Products.Update(current);
                         _logger.LogInformation($" Product with Id {request.Id} updated");
+                        await _context.SaveChangesAsync();
                     }
                 }
 
-                await _context.SaveChangesAsync();
                 return Result.Success();
             }
             catch (Exception ex)

@@ -10,7 +10,7 @@ namespace Tatweer.Insrastructure.Configuration
         {
             builder.Property(c => c.Name).IsRequired().HasMaxLength(200);
             builder.Property(c => c.Qty).HasDefaultValue(0);
-            builder.Property(c => c.IsVisible).HasDefaultValue(true);
+            builder.Property(c => c.IsVisible);
             builder.Property(c => c.Price).IsRequired().HasDefaultValue(0);
             builder.ToTable("Products");
         }
